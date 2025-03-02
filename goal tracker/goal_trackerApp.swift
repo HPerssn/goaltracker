@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct goal_trackerApp: App {
@@ -13,5 +14,6 @@ struct goal_trackerApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [Goal.self, Habit.self])
     }
 }
