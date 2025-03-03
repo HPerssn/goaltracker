@@ -11,14 +11,14 @@ import Foundation
 final class Goal {
     var type: String
     var targetValue: Double
-    var timeFrame: TimeInterval
+    var timeframe: TimeInterval
     var createdDate: Date
     @Relationship(deleteRule: .cascade) var habits: [Habit]?
     
-    init(type: String, targetValue: Double, timeFrame: TimeInterval) {
+    init(type: String, targetValue: Double, timeframe: TimeInterval) {
         self.type = type
         self.targetValue = targetValue
-        self.timeFrame = timeFrame
+        self.timeframe = timeframe
         self.createdDate = Date()
     }
 }

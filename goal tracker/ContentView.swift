@@ -11,6 +11,7 @@ import SwiftData
 struct ContentView: View {
     @Query private var goals: [Goal]
     @State private var showingGoalCreation = false
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
         NavigationStack {
             Group {
