@@ -5,6 +5,7 @@
 //  Created by Henrik Persson on 2025-03-02.
 //
 
+import SwiftData
 import SwiftUI
 
 struct GoalCreationView: View {
@@ -44,7 +45,7 @@ struct GoalCreationView: View {
         dismiss()
     }
     private func generateHabitPlan(for goal: Goal) -> [Habit] {
-        let days = Int(goal.timeframe)
+        let days = Int(goal.timeframe / 86400)
         let startValue = 1.0
         let targetValue = goal.targetValue
         let growthRate = pow(targetValue / startValue, 1.0 / Double(days - 1))
@@ -62,4 +63,6 @@ struct GoalCreationView: View {
 
 #Preview {
     GoalCreationView()
+        .modelContainer(for: [Goal.self, Habit.self])
+        
 }
