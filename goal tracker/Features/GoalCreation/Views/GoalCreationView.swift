@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import SwiftData
 
 struct GoalCreationView: View {
     @Environment(\.modelContext) private var modelContext
@@ -64,5 +65,4 @@ struct GoalCreationView: View {
 #Preview {
     GoalCreationView()
         .modelContainer(for: [Goal.self, Habit.self])
-        
 }
