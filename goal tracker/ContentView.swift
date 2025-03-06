@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Query private var goals: [Goal]
+    @Query(sort: \Goal.timeframe) private var goals: [Goal]
     @State private var showingGoalCreation = false
     @Environment(\.modelContext) private var modelContext
     var body: some View {
@@ -39,16 +39,21 @@ struct ContentView: View {
                                     }
                                 }
                             }
-                        .onDelete(perform: deleteGoals)
+                        .onDelete(perform: deleteGoals(indexes:))
                         }
                     }
                 }
             .navigationTitle("My Goals")
             .toolbar {
-                Button(action: {
-                    showingGoalCreation = true })
-                {
-                    Label("Add Goal", systemImage: "plus")
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        showingGoalCreation = true })
+                    {
+                        Label("Add Goal", systemImage: "plus")
+                    }
                 }
             }
         .sheet(isPresented: $showingGoalCreation) {
@@ -56,16 +61,14 @@ struct ContentView: View {
             }
         }
     }
-    private func deleteGoals(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(goals[index])
-            }
+    private func deleteGoals(indexes: IndexSet) {
+            for index in indexes {
+                    modelContext.delete(goals[index])
         }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: [Goal.self, Habit.self])
+        .modelContainer(for: [Goal.self])
 }

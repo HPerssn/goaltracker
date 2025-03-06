@@ -14,6 +14,6 @@ struct goal_trackerApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Goal.self, Habit.self])
+        .modelContainer(for: [Goal.self])
     }
 }

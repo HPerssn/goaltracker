@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import SwiftData
 
 struct GoalCreationView: View {
     @Environment(\.modelContext) private var modelContext
@@ -15,11 +14,12 @@ struct GoalCreationView: View {
     @State private var goalType = ""
     @State private var targetValue = 100.0
     @State private var timeframeDays = 30.0
+    
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Goal details")) {
-                    TextField("Goal Type( e.g., push-ups)", text: $goalType)
+                    TextField("Goal Type (e.g., push-ups)", text: $goalType)
                     Stepper("Target: \(Int(targetValue))", value: $targetValue, in: 1...1000, step: 5)
                     Stepper("Timeframe: \(Int(timeframeDays)) days", value: $timeframeDays, in: 7...365)
                 }
@@ -33,36 +33,19 @@ struct GoalCreationView: View {
             .navigationTitle("New Goal")
         }
     }
+    
     private func createGoal() {
         let newGoal = Goal(
             type: goalType,
             targetValue: targetValue,
             timeframe: timeframeDays * 86400
         )
-        //Generate habit plan
-        let habits = generateHabitPlan(for: newGoal)
-        newGoal.habits = habits
         modelContext.insert(newGoal)
         dismiss()
-    }
-    private func generateHabitPlan(for goal: Goal) -> [Habit] {
-        let days = Int(goal.timeframe / 86400)
-        let startValue = 1.0
-        let targetValue = goal.targetValue
-        let growthRate = pow(targetValue / startValue, 1.0 / Double(days - 1))
-        
-        var habits = [Habit]()
-        for day in 0..<days {
-            let date = Calendar.current.date(byAdding: .day, value: day, to: Date()) ?? Date()
-            let target = startValue * pow(growthRate, Double(day))
-            let habit = Habit(date: date, targetValue: round(target))
-            habits.append(habit)
-        }
-        return habits
     }
 }
 
 #Preview {
     GoalCreationView()
-        .modelContainer(for: [Goal.self, Habit.self])
+        .modelContainer(for: [Goal.self])
 }

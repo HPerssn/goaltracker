@@ -13,7 +13,6 @@ final class Habit {
     var targetValue: Double
     var isCompleted: Bool
     var actualValue: Double?
-    @Relationship(deleteRule: .cascade, inverse: \Goal.habits) var goal: Goal?
     
     init(date: Date, targetValue: Double) {
         self.date = date

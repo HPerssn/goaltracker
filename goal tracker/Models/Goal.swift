@@ -13,7 +13,6 @@ final class Goal {
     var targetValue: Double
     var timeframe: TimeInterval
     var createdDate: Date
-    @Relationship(deleteRule: .cascade) var habits: [Habit]?
     
     init(type: String, targetValue: Double, timeframe: TimeInterval) {
         self.type = type
