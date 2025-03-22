@@ -30,7 +30,7 @@ struct ContentView: View {
                 } else {
                     List {
                         ForEach(goals) { goal in
-                            NavigationLink(destination: Text("Detail view for \(goal.type)")) {
+                            NavigationLink(destination: GoalDetail(goal: goal)){
                                 VStack(alignment: .leading) {
                                     Text(goal.type)
                                         .font(.headline)
